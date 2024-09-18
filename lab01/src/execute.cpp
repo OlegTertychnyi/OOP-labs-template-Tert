@@ -1,5 +1,5 @@
 #include "../include/execute.h"
-#include "../include/stdc++.h"
+#include <string>
 
 bool isAfraid(const std::string& day, int number) {
     if (day == "Понедельник" && number == 12) {

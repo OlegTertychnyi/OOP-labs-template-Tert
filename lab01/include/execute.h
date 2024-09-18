@@ -1,5 +1,5 @@
 #pragma once
 
-#include "stdc++.h"
+#include <string>
 
 bool isAfraid(const std:: string&, int);

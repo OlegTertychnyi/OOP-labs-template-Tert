@@ -1,5 +1,6 @@
-#include "include/stdc++.h"
 #include "include/execute.h"
+#include <iostream>
+#include <string>
 
 int main()
 {
