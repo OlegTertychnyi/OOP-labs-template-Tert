@@ -92,11 +92,7 @@ Seven::Seven(Seven &&other) noexcept{
 }
 
 Seven:: ~Seven()  noexcept {
-    if (_size > 0){
-        _size = 0;
-        delete[] _digits;
-        _digits = nullptr;
-    }
+    delete[] _digits;
 }
 
 size_t Seven::get_size() const{
