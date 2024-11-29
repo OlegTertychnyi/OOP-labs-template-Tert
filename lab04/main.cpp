@@ -7,7 +7,6 @@ using namespace Shape;
 
 int main() {
     try {
-        // Создаем массив для фигур, работающий с базовым типом IFigure
         FigureArray<std::shared_ptr<IFigure>> figureArray;
 
         std::cout << "Меню: \n";
@@ -31,7 +30,6 @@ int main() {
                     for (auto& point : points) {
                         std::cin >> point.x >> point.y;
                     }
-                    // Добавляем пятиугольник в массив
                     figureArray.push_back(std::make_shared<Pentagon<double>>(points));
                     break;
                 }
@@ -41,7 +39,6 @@ int main() {
                     for (auto& point : points) {
                         std::cin >> point.x >> point.y;
                     }
-                    // Добавляем шестиугольник в массив
                     figureArray.push_back(std::make_shared<Hexagon<double>>(points));
                     break;
                 }
@@ -51,7 +48,6 @@ int main() {
                     for (auto& point : points) {
                         std::cin >> point.x >> point.y;
                     }
-                    // Добавляем восьмиугольник в массив
                     figureArray.push_back(std::make_shared<Octagon<double>>(points));
                     break;
                 }
@@ -59,14 +55,12 @@ int main() {
                     size_t index;
                     std::cout << "Введите индекс фигуры для удаления: ";
                     std::cin >> index;
-                    // Удаляем фигуру по индексу
                     figureArray.remove_at(index);
                     std::cout << "Фигура удалена.\n";
                     break;
                 }
                 case 5: {
                     std::cout << "Список всех фигур:\n";
-                    // Выводим все фигуры
                     figureArray.PrintAll();
                     break;
                 }

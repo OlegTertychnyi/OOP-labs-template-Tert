@@ -5,26 +5,25 @@
 #include <stdexcept>
 #include <algorithm>
 #include <cstdint>
-#include <iostream> // Добавлено для вывода сообщений
+#include <iostream>
 
 namespace Containers {
 
 class MemoryResource : public std::pmr::memory_resource {
 private:
     struct Block {
-        void* ptr;              // Указатель на блок
-        std::size_t size;       // Размер блока
-        bool is_free;           // Флаг занятости
+        void* ptr;
+        std::size_t size;
+        bool is_free;
 
         Block(void* p, std::size_t s, bool free = true) 
             : ptr(p), size(s), is_free(free) {}
     };
 
-    std::vector<Block> blocks; // Список всех блоков памяти
-    void* memory_pool;         // Пул памяти
-    std::size_t total_size;    // Общий размер пула памяти
+    std::vector<Block> blocks;
+    void* memory_pool;
+    std::size_t total_size;
 
-    // Вспомогательная функция для выравнивания адреса
     void* align_address(void* ptr, std::size_t alignment) {
         auto address = reinterpret_cast<std::uintptr_t>(ptr);
         std::uintptr_t aligned = (address + alignment - 1) & ~(alignment - 1);
@@ -44,19 +43,16 @@ protected:
                 void* aligned_ptr = align_address(block.ptr, alignment);
                 std::size_t padding = static_cast<std::byte*>(aligned_ptr) - static_cast<std::byte*>(block.ptr);
 
-                // Проверяем, достаточно ли памяти для выравнивания и выделения
                 if (block.size < bytes + padding) {
                     continue;
                 }
 
-                // Создаем блок для отступа (padding), если необходимо
                 if (padding > 0) {
                     blocks.emplace_back(block.ptr, padding, true);
                     block.ptr = static_cast<std::byte*>(block.ptr) + padding;
                     block.size -= padding;
                 }
 
-                // Если остаются свободные байты после выделения, создаем новый блок
                 if (block.size > bytes) {
                     blocks.emplace_back(
                         static_cast<std::byte*>(block.ptr) + bytes,
@@ -65,7 +61,6 @@ protected:
                     );
                 }
 
-                // Помечаем текущий блок как занятый
                 block.size = bytes;
                 block.is_free = false;
 
@@ -74,7 +69,6 @@ protected:
             }
         }
 
-        // Если нет подходящего блока, выбрасываем исключение
         throw std::bad_alloc();
     }
 
@@ -88,9 +82,8 @@ protected:
             throw std::invalid_argument("Attempted to deallocate unmanaged memory.");
         }
 
-        it->is_free = true; // Освобождаем блок
+        it->is_free = true;
 
-        // Пытаемся объединить соседние свободные блоки
         if (it != blocks.begin()) {
             auto prev = std::prev(it);
             if (prev->is_free) {
@@ -116,7 +109,7 @@ protected:
 public:
     MemoryResource(std::size_t total_size)
         : memory_pool(new std::byte[total_size]), total_size(total_size) {
-        blocks.reserve(1000); // Предварительное резервирование емкости
+        blocks.reserve(1000);
         blocks.emplace_back(memory_pool, total_size, true);
     }
 
@@ -124,7 +117,6 @@ public:
         delete[] static_cast<std::byte*>(memory_pool);
     }
 
-    // Геттеры для отладки
     std::size_t get_total_size() const { 
         return total_size; 
     }

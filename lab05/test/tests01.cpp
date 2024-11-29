@@ -18,7 +18,7 @@ namespace Containers {
     bool compare_stack(const Stack<T, std::pmr::polymorphic_allocator<T>>& stack, const std::vector<T>& expected) {
         if (stack.size() != expected.size()) return false;
         std::size_t idx = 0;
-        for (const auto& item : stack) { // Используем 'const auto&'
+        for (const auto& item : stack) {
             if (!(item == expected[idx])) return false;
             ++idx;
         }
@@ -75,7 +75,7 @@ namespace Containers {
         std::pmr::polymorphic_allocator<int> allocator(&customResource);
         Stack<int, std::pmr::polymorphic_allocator<int>> stack(allocator);
 
-        EXPECT_THROW(stack.pop(), std::out_of_range); // Исправлено на std::out_of_range
+        EXPECT_THROW(stack.pop(), std::out_of_range);
     }
 
     TEST(StackTests, ShouldAccessTopElementCorrectly) {
@@ -173,7 +173,7 @@ namespace Containers {
     }
 
     TEST(StackTests, ShouldThrowOnExceedingMemory) {
-        MemoryResource customResource(64); // Small pool to force error
+        MemoryResource customResource(64);
         std::pmr::polymorphic_allocator<CustomStruct> allocator(&customResource);
         Stack<CustomStruct, std::pmr::polymorphic_allocator<CustomStruct>> stack(allocator);
 

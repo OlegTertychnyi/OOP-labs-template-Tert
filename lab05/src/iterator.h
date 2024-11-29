@@ -6,7 +6,6 @@
 
 namespace Containers {
 
-    // Шаблон итератора, параметризованный типом узла
     template <typename NodeType>
     class StackIterator {
     public:
@@ -20,34 +19,28 @@ namespace Containers {
         NodeType* current;
 
     public:
-        // Конструктор итератора
         explicit StackIterator(NodeType* node = nullptr) 
             : current(node) {}
 
-        // Оператор разыменования
         reference operator*() const {
             return current->data;
         }
 
-        // Оператор доступа к члену
         pointer operator->() const {
             return &(current->data);
         }
 
-        // Префиксный инкремент
         StackIterator& operator++() {
             if (current) current = current->next;
             return *this;
         }
 
-        // Постфиксный инкремент
         StackIterator operator++(int) {
             StackIterator temp = *this;
             ++(*this);
             return temp;
         }
 
-        // Операторы сравнения
         bool operator==(const StackIterator& other) const {
             return current == other.current;
         }
