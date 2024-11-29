@@ -1,0 +1,9 @@
+* text=auto eol=lf
+
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+*.Dockerfile text eol=lf
+*.json text eol=lf
+*.cpp text eol=lf
+*.h text eol=lf

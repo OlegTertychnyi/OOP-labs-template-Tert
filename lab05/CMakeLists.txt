@@ -4,9 +4,9 @@ project(gtest)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=maybe-uninitialized")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+
 endif()
 
 if (WIN32)
@@ -24,8 +24,13 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+add_library(${CMAKE_PROJECT_NAME}_lib INTERFACE)
+target_include_directories(${CMAKE_PROJECT_NAME}_lib INTERFACE
+    src/iterator.h
+    src/memoryResource.h
+    src/stack.h
+)
 
-add_library(${CMAKE_PROJECT_NAME}_lib src/execute.cpp)
 add_executable(${CMAKE_PROJECT_NAME}_exe main.cpp)
 target_link_libraries(${CMAKE_PROJECT_NAME}_exe PRIVATE ${CMAKE_PROJECT_NAME}_lib)
 

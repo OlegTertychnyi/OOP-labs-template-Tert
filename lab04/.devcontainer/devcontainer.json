@@ -1,5 +1,5 @@
 {
-    "name": "C++ lab03",
+    "name": "C++ lab04",
     "dockerFile": "Dockerfile",
     "context": "..",
     "appPort": [],

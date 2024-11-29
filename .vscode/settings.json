@@ -75,7 +75,18 @@
         "xlocmon": "cpp",
         "xlocnum": "cpp",
         "xloctime": "cpp",
-        "xtr1common": "cpp"
+        "xtr1common": "cpp",
+        "*.tcc": "cpp",
+        "cstdarg": "cpp",
+        "cwctype": "cpp",
+        "memory_resource": "cpp",
+        "numeric": "cpp",
+        "random": "cpp",
+        "string_view": "cpp",
+        "numbers": "cpp",
+        "semaphore": "cpp",
+        "shared_mutex": "cpp"
     },
-    "cmake.sourceDirectory": "/workspaces/OOP-labs-template-Tert/lab03"
+    "cmake.sourceDirectory": "/workspaces/OOP-labs-template-Tert/lab03",
+    "C_Cpp.errorSquiggles": "disabled"
 }

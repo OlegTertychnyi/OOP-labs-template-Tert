@@ -4,9 +4,9 @@ project(gtest)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=maybe-uninitialized")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+
 endif()
 
 if (WIN32)
@@ -24,11 +24,23 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+# Добавляем только заголовочные файлы для интерфейсной библиотеки
+add_library(${CMAKE_PROJECT_NAME}_lib INTERFACE)
+target_include_directories(${CMAKE_PROJECT_NAME}_lib INTERFACE
+    src/point.h
+    src/ifigure.h
+    src/figure.h
+    src/hexagon.h
+    src/octagon.h
+    src/pentagon.h
+    src/figureArray.h
+)
 
-add_library(${CMAKE_PROJECT_NAME}_lib src/execute.cpp)
+# Ваш основной исполнимый файл
 add_executable(${CMAKE_PROJECT_NAME}_exe main.cpp)
 target_link_libraries(${CMAKE_PROJECT_NAME}_exe PRIVATE ${CMAKE_PROJECT_NAME}_lib)
 
+# Включаем тесты
 enable_testing()
 
 add_executable(tests test/tests01.cpp)
